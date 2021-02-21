@@ -18,8 +18,8 @@ ABaseGeometryActor::ABaseGeometryActor()
 void ABaseGeometryActor::BeginPlay()
 {
 	Super::BeginPlay();
-
-	printStringTypes();
+	printTypes();
+	// printStringTypes();
 }
 
 // Called every frame
@@ -31,27 +31,18 @@ void ABaseGeometryActor::Tick(float DeltaTime)
 
 void ABaseGeometryActor::printTypes()
 {
-	int WeaponsNum = 4;
-	int killsNum = 7;
-	float Health = 34.5253f;
-	bool isDead = false;
-	bool hasWeapon = true;
 
-	UE_LOG(LogTemp, Display, TEXT("Wearpons num: %d, kills num: %i"), WeaponsNum, killsNum);
-	UE_LOG(LogTemp, Display, TEXT("Health: %f"), Health);
-	UE_LOG(LogTemp, Display, TEXT("Health: %.2f"), Health);
-	UE_LOG(LogTemp, Display, TEXT("Is dead: %d"), isDead);
-	UE_LOG(LogTemp, Display, TEXT("Has wearpon: %d"), static_cast<int>(hasWeapon));
+	UE_LOG(LogBaseGeompetry, Warning, TEXT("Acotr name: %s"), *GetName());
+	UE_LOG(LogBaseGeompetry, Warning, TEXT("Wearpons num: %d, kills num: %i"), WeaponsNum, killsNum);
+	UE_LOG(LogBaseGeompetry, Warning, TEXT("Health: %f"), Health);
+	UE_LOG(LogBaseGeompetry, Warning, TEXT("Is dead: %d"), isDead);
+	UE_LOG(LogBaseGeompetry, Warning, TEXT("Has wearpon: %d"), static_cast<int>(hasWeapon));
 }
 
-void ABaseGeometryActor::printStringTypes() {
-
+void ABaseGeometryActor::printStringTypes() 
+{
 	FString Name = "John Connor";
 	UE_LOG(LogBaseGeompetry, Display, TEXT("Name: %s"), *Name);
-
-	int WeaponsNum = 4;
-	float Health = 34.5253f;
-	bool isDead = false;
 
 	FString WearponsNumStr = "Weapns num = " + FString::FromInt(WeaponsNum);
 	FString HealthStr = "Health = " + FString::SanitizeFloat(Health);
