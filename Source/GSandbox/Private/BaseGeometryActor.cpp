@@ -3,6 +3,7 @@
 
 #include "BaseGeometryActor.h"
 #include "Engine/Engine.h"
+#include "Materials/MaterialInstanceDynamic.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogBaseGeompetry, All, All)
 
@@ -27,8 +28,7 @@ void ABaseGeometryActor::BeginPlay()
 	// PrintStringTypes();
 	// PrintTransform();
 	
-
-
+	SetColor(GeometryData.Color);
 }
 
 // Called every frame
@@ -57,6 +57,14 @@ void ABaseGeometryActor::HandleMovement()
 
 	default:
 		break;
+	}
+}
+
+void ABaseGeometryActor::SetColor(const FLinearColor& Color)
+{
+	UMaterialInstanceDynamic* DynMaterial = BaseMesh->CreateAndSetMaterialInstanceDynamic(0);
+	if (DynMaterial) {
+		DynMaterial->SetVectorParameterValue("Color", Color);
 	}
 }
 
