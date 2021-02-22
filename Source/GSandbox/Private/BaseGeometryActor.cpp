@@ -23,9 +23,9 @@ void ABaseGeometryActor::BeginPlay()
 
 	InitialLocation = GetActorLocation();
 
-	// printTypes();
-	// printStringTypes();
-	// printTransform();
+	// PrintTypes();
+	// PrintStringTypes();
+	// PrintTransform();
 	
 
 
@@ -36,15 +36,32 @@ void ABaseGeometryActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	FVector CurrentLocation = GetActorLocation();
-	float time = GetWorld()->GetTimeSeconds();
-	CurrentLocation.Z = InitialLocation.Z + Amplitude * FMath::Sin(Frequency * time);
-
-	SetActorLocation(CurrentLocation);
-
+	HandleMovement();
 }
 
-void ABaseGeometryActor::printTypes()
+void ABaseGeometryActor::HandleMovement()
+{
+	switch (GeometryData.MoveType)
+	{
+	case EMovementType::Sin:
+	{
+		FVector CurrentLocation = GetActorLocation();
+		float Time = GetWorld()->GetTimeSeconds();
+		CurrentLocation.Z = InitialLocation.Z + GeometryData.Amplitude * FMath::Sin(GeometryData.Frequency * Time);
+
+		SetActorLocation(CurrentLocation);
+	}
+	break;
+	case EMovementType::Static:
+		break;
+
+	default:
+		break;
+	}
+}
+
+
+void ABaseGeometryActor::PrintTypes()
 {
 
 	UE_LOG(LogBaseGeompetry, Warning, TEXT("Acotr name: %s"), *GetName());
@@ -54,7 +71,7 @@ void ABaseGeometryActor::printTypes()
 	UE_LOG(LogBaseGeompetry, Warning, TEXT("Has wearpon: %d"), static_cast<int>(hasWeapon));
 }
 
-void ABaseGeometryActor::printStringTypes() 
+void ABaseGeometryActor::PrintStringTypes() 
 {
 	FString Name = "John Connor";
 	UE_LOG(LogBaseGeompetry, Display, TEXT("Name: %s"), *Name);
@@ -71,7 +88,7 @@ void ABaseGeometryActor::printStringTypes()
 
 }
 
-void ABaseGeometryActor::printTransform() {
+void ABaseGeometryActor::PrintTransform() {
 
 	FTransform Transform = GetActorTransform();
 	FVector Location = Transform.GetLocation();
@@ -87,3 +104,5 @@ void ABaseGeometryActor::printTransform() {
 
 	UE_LOG(LogBaseGeompetry, Error, TEXT("Human Transform: %s"), *Transform.ToHumanReadableString());
 }
+
+
