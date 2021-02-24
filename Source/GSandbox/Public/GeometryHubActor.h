@@ -8,6 +8,7 @@
 #include "GeometryHubActor.generated.h"
 
 
+
 USTRUCT(BlueprintType)
 struct FGeometryPayload {
 	GENERATED_USTRUCT_BODY();
@@ -48,4 +49,9 @@ private:
 	void DoActorSpawn1();
 	void DoActorSpawn2();
 	void DoActorSpawn3();
+
+	UFUNCTION()
+	void OnColorChanged(const FLinearColor& Color, const FString& Name);
+	
+	void OnTimerFinished(AActor* Actor);
 };

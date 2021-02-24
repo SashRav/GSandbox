@@ -34,6 +34,13 @@ void ABaseGeometryActor::BeginPlay()
 	GetWorldTimerManager().SetTimer(TimerHandle, this, &ABaseGeometryActor::OnTimerFired, GeometryData.TimerRate, true);
 }
 
+void ABaseGeometryActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	UE_LOG(LogBaseGeompetry, Error, TEXT("Acotr is dead: %s"), *GetName());
+	Super::EndPlay(EndPlayReason);
+
+}
+
 // Called every frame
 void ABaseGeometryActor::Tick(float DeltaTime)
 {
@@ -70,20 +77,6 @@ void ABaseGeometryActor::SetColor(const FLinearColor& Color)
 	UMaterialInstanceDynamic* DynMaterial = BaseMesh->CreateAndSetMaterialInstanceDynamic(0);
 	if (DynMaterial) {
 		DynMaterial->SetVectorParameterValue("Color", Color);
-	}
-}
-
-void ABaseGeometryActor::OnTimerFired()
-{
-	if (++TimerCount <= MaxTimerCount) {
-		const FLinearColor NewColor = FLinearColor::MakeRandomColor();
-		UE_LOG(LogBaseGeompetry, Display, TEXT("Timer count: %i, Color to set up: %s"), TimerCount, *NewColor.ToString());
-		SetColor(NewColor);
-	}
-	else
-	{
-		UE_LOG(LogBaseGeompetry, Warning, TEXT("Timer has been stopped! "));
-		GetWorldTimerManager().ClearTimer(TimerHandle);
 	}
 }
 
@@ -135,4 +128,19 @@ void ABaseGeometryActor::PrintTransform() {
 	UE_LOG(LogBaseGeompetry, Error, TEXT("Human Transform: %s"), *Transform.ToHumanReadableString());
 }
 
+void ABaseGeometryActor::OnTimerFired()
+{
+	if (++TimerCount <= MaxTimerCount) {
+		const FLinearColor NewColor = FLinearColor::MakeRandomColor();
+		UE_LOG(LogBaseGeompetry, Display, TEXT("Timer count: %i, Color to set up: %s"), TimerCount, *NewColor.ToString());
+		SetColor(NewColor);
+		OnColorChanged.Broadcast(NewColor, GetName());
+	}
+	else
+	{
+		UE_LOG(LogBaseGeompetry, Warning, TEXT("Timer has been stopped! "));
+		GetWorldTimerManager().ClearTimer(TimerHandle);
+		OnTimerFinished.Broadcast(this);
+	}
+}
 
