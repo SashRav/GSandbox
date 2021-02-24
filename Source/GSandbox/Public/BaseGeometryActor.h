@@ -32,7 +32,6 @@ struct FGeometryData {
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	EMovementType MoveType = EMovementType::Sin;
 
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Design")
 	FLinearColor Color = FLinearColor::Black;
 
@@ -50,7 +49,7 @@ public:
 	ABaseGeometryActor();
 
 	UPROPERTY(VisibleAnywhere)
-		UStaticMeshComponent* BaseMesh;
+	UStaticMeshComponent* BaseMesh;
 
 	void SetGeometryData(const FGeometryData& Data) { GeometryData = Data; }
 

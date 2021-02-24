@@ -54,4 +54,6 @@ private:
 	void OnColorChanged(const FLinearColor& Color, const FString& Name);
 	
 	void OnTimerFinished(AActor* Actor);
+
+	virtual FString CollectAllData(AActor* Actor);
 };

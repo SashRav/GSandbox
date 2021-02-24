@@ -97,10 +97,27 @@ void AGeometryHubActor::OnTimerFinished(AActor* Actor)
 	ABaseGeometryActor* Geometry = Cast<ABaseGeometryActor>(Actor);
 	if (!Geometry) return;
 
-	UE_LOG(LogGeometryHub, Display, TEXT("Cast is success, amplitude %f"), Geometry->GetGeometryData().Amplitude);
+	UE_LOG(LogGeometryHub, Display, TEXT("Cast is success, amplitude %s"), *CollectAllData(Geometry));
 
 	Geometry->Destroy();
 	//Geometry->SetLifeSpan(2.0f);
+}
+
+FString AGeometryHubActor::CollectAllData(AActor* Actor)
+{
+	ABaseGeometryActor* Geometry = Cast<ABaseGeometryActor>(Actor);
+	if (!Geometry) return "No Class exists";
+	float Amplitude = Geometry->GetGeometryData().Amplitude;
+	float Frequency = Geometry->GetGeometryData().Frequency;
+	EMovementType MoveType = Geometry->GetGeometryData().MoveType;
+	FLinearColor Color = Geometry->GetGeometryData().Color;
+	float TimerRate = Geometry->GetGeometryData().TimerRate;
+
+	
+	//FString AllData = FString::Printf(TEXT(" \n == ALL Stat == \n %.2f \n %.2f \n %s \n %s \n %.2f"), Amplitude, Frequency, MoveType, Color.ToString(), TimerRate);
+	FString AllData = FString::Printf(TEXT(" \n == ALL Stat == \n %.2f \n %.2f \n %.2f \n %s "), Amplitude, Frequency, TimerRate, *Color.ToString());
+
+	return FString(AllData);
 }
 
 
