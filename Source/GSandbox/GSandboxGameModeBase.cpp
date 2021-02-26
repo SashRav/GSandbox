@@ -2,4 +2,9 @@
 
 
 #include "GSandboxGameModeBase.h"
+#include "SandboxPawn.h"
 
+AGSandboxGameModeBase::AGSandboxGameModeBase()
+{
+	DefaultPawnClass = ASandboxPawn::StaticClass();
+}

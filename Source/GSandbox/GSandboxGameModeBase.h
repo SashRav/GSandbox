@@ -13,5 +13,7 @@ UCLASS()
 class GSANDBOX_API AGSandboxGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+		AGSandboxGameModeBase();
 };
